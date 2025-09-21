@@ -1,0 +1,357 @@
+<% layout("/layouts/boilerplate") %>
+<div class="container-fluid px-4 py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-10">
+            <!-- Back Button -->
+ <div class="mb-4">
+  <a href="/listings" class="btn btn-outline-primary">
+        <i class="fas fa-arrow-left me-2"></i>Back to Listings
+        </a>
+         </div>
+
+            <!-- Main Listing Card -->
+ <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+            <!-- Image Section -->
+            <div class="position-relative">
+            <img src="<%= (listing.image && listing.image.url) ? listing.image.url : 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGNhbXBpbmd8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60' %>"
+                     class="card-img-top"
+                         alt="<%= listing.title %>"
+                         style="height: 400px; object-fit: cover;">
+                    <div class="position-absolute top-0 start-0 w-100 h-100 bg-gradient-dark"></div>
+                    
+                    <!-- Title Overlay -->
+                    <div class="position-absolute bottom-0 start-0 w-100 p-4 text-white">
+                        <h1 class="display-4 fw-bold mb-2"><%= listing.title %></h1>
+                        <p class="h4 mb-0">
+                            <i class="fas fa-map-marker-alt me-2"></i>
+                            <%= listing.location %>, <%= listing.country %>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Content Section -->
+                <div class="card-body p-4">
+                    <div class="row">
+                        <!-- Left Column - Details -->
+                        <div class="col-lg-8">
+                            <!-- Price Badge -->
+                            <div class="d-flex align-items-center mb-4">
+                                <div class="bg-primary text-white px-4 py-2 rounded-pill">
+                                    <i class="fas fa-rupee-sign me-2"></i>
+                                    <span class="h5 mb-0"><%= listing.price.toLocaleString("en-IN") %> / night</span>
+                                </div>
+                            </div>
+
+                            <!-- Average Rating -->
+                            <% if (averageRating > 0) { %>
+                            <div class="d-flex align-items-center mb-4">
+                                <div class="me-3">
+                                    <h5 class="mb-1">Average Rating</h5>
+                                    <div class="rating">
+                                        <% for (let i = 1; i <= 5; i++) { %>
+                                            <% if (i <= Math.floor(averageRating)) { %>
+                                                <i class="fas fa-star text-warning"></i>
+                                            <% } else if (i === Math.ceil(averageRating) && averageRating % 1 !== 0) { %>
+                                                <i class="fas fa-star-half-alt text-warning"></i>
+                                            <% } else { %>
+                                                <i class="far fa-star text-warning"></i>
+                                            <% } %>
+                                        <% } %>
+                                        <span class="ms-2 fw-bold"><%= averageRating.toFixed(1) %></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <% } %>
+
+                            <!-- Description -->
+                            <div class="mb-4">
+                                <h3 class="fw-bold text-primary mb-3">
+                                    <i class="fas fa-info-circle me-2"></i>About this property
+                                </h3>
+                                <p class="text-muted fs-5" style="line-height: 1.8;">
+                                    <%= listing.description %>
+                                </p>
+                            </div>
+
+                            <!-- Map Section -->
+                            <div id="map" style="width: 100%; height: 400px;" class="mb-4"></div>
+
+                            <script>
+                                const listingData = {
+                                    latitude: <%= listing.latitude || 'null' %>,
+                                    longitude: <%= listing.longitude || 'null' %>,
+                                    location: '<%= listing.location %>',
+                                    country: '<%= listing.country %>'
+                                };
+
+                                function initializeMap(lat, lng) {
+                                    const map = L.map('map').setView([lat, lng], 13);
+                                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                                        maxZoom: 19,
+                                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                    }).addTo(map);
+                                    L.marker([lat, lng]).addTo(map)
+                                        .bindPopup('Property Location: ' + listingData.location)
+                                        .openPopup();
+                                }
+
+                                if (listingData.latitude && listingData.longitude) {
+                                    // Use stored coordinates
+                                    initializeMap(listingData.latitude, listingData.longitude);
+                                } else {
+                                    // Geocode the location
+                                    const locationQuery = listingData.location + ', ' + listingData.country;
+                                    fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(locationQuery))
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            if (data.length > 0) {
+                                                const lat = parseFloat(data[0].lat);
+                                                const lng = parseFloat(data[0].lon);
+                                                initializeMap(lat, lng);
+                                            } else {
+                                                // Fallback to Paris if geocoding fails
+                                                initializeMap(48.8566, 2.3522);
+                                            }
+                                        })
+                                        .catch(error => {
+                                            console.error('Geocoding error:', error);
+                                            // Fallback
+                                            initializeMap(48.8566, 2.3522);
+                                        });
+                                }
+                            </script>
+
+                            <!-- Features -->
+                            <div class="mb-4">
+                                <h3 class="fw-bold text-primary mb-3">
+                                    <i class="fas fa-star me-2"></i>Features
+                                </h3>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <ul class="list-unstyled">
+                                            <li class="mb-2">
+                                                <i class="fas fa-check-circle text-success me-2"></i>
+                                                Fully furnished
+                                            </li>
+                                            <li class="mb-2">
+                                                <i class="fas fa-check-circle text-success me-2"></i>
+                                                Free WiFi
+                                            </li>
+                                            <li class="mb-2">
+                                                <i class="fas fa-check-circle text-success me-2"></i>
+                                                Kitchen available
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <ul class="list-unstyled">
+                                            <li class="mb-2">
+                                                <i class="fas fa-check-circle text-success me-2"></i>
+                                                Air conditioning
+                                            </li>
+                                            <li class="mb-2">
+                                                <i class="fas fa-check-circle text-success me-2"></i>
+                                                Parking available
+                                            </li>
+                                            <li class="mb-2">
+                                                <i class="fas fa-check-circle text-success me-2"></i>
+                                                Pet friendly
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column - Actions -->
+                        <div class="col-lg-4">
+                            <div class="card border-0 bg-light">
+                                <div class="card-body">
+                                    <h4 class="fw-bold mb-3">Actions</h4>
+
+                                    <% if (user && listing.owner && user._id.equals(listing.owner._id)) { %>
+                                        <!-- Edit Button -->
+                                        <a href="/listings/<%= listing._id %>/edit"
+                                           class="btn btn-primary w-100 mb-3">
+                                            <i class="fas fa-edit me-2"></i>Edit Listing
+                                        </a>
+
+                                        <!-- Delete Button -->
+                                        <form method="POST"
+                                              action="/listings/<%= listing._id %>?_method=DELETE"
+                                              class="d-inline w-100">
+                                            <button type="submit"
+                                                    class="btn btn-danger w-100"
+                                                    onclick="return confirm('Are you sure you want to delete this listing?')">
+                                                <i class="fas fa-trash me-2"></i>Delete Listing
+                                            </button>
+                                        </form>
+                                    <% } else { %>
+                                        <p class="text-muted">You don't have permission to edit or delete this listing.</p>
+                                    <% } %>
+                                </div>
+                            </div>
+
+                            <!-- Contact Info -->
+                            <div class="card border-0 bg-light mt-3">
+                                <div class="card-body">
+                                    <h5 class="fw-bold mb-3">Contact Host</h5>
+                                    <% if (listing.owner) { %>
+                                        <p class="text-muted mb-2">
+                                            <i class="fas fa-user me-2"></i>
+                                            <%= listing.owner.username %>
+                                        </p>
+                                        <p class="text-muted mb-0">
+                                            <i class="fas fa-envelope me-2"></i>
+                                            <%= listing.owner.email %>
+                                        </p>
+                                    <% } else { %>
+                                        <p class="text-muted mb-0">Owner information not available.</p>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.bg-gradient-dark {
+    background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.7));
+}
+
+.btn-outline-primary {
+    border: 2px solid #667eea;
+    color: #667eea;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+    background: #667eea;
+    border-color: #667eea;
+    transform: translateY(-2px);
+}
+
+.display-4 {
+    font-size: 2.5rem;
+}
+
+@media (max-width: 768px) {
+    .display-4 {
+        font-size: 2rem;
+    }
+}
+.review-content {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border-left: 4px solid #007bff;
+}
+
+.review-content h6 {
+    font-weight: 600;
+    color: #495057;
+}
+
+.review-content .card-text {
+    color: #212529;
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
+/* Enhanced card styling for reviews */
+.reviews-container .card {
+    border: 1px solid #e9ecef;
+    border-radius: 0.75rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    transition: box-shadow 0.15s ease-in-out;
+}
+
+.reviews-container .card:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.reviews-container .card-body {
+    padding: 1.5rem;
+}
+
+.reviews-container .rating {
+    font-size: 1.1rem;
+}
+</style>
+
+<div class="col-8 offset-3 mb-3">
+    <h4>Leave a Review</h4>
+    <form action="/listings/<%= listing._id %>/reviews" method="POST" novalidate class="needs-validation">
+        <div class="mb-3 mt-3 star-rating-container">
+            <label for="rating" class="form-label">Rating</label>
+            <fieldset class="star-rating">
+                <input type="radio" id="star5" name="review[rating]" value="5" /><label for="star5" title="5 stars"><i class="fas fa-star"></i></label>
+                <input type="radio" id="star4" name="review[rating]" value="4" /><label for="star4" title="4 stars"><i class="fas fa-star"></i></label>
+                <input type="radio" id="star3" name="review[rating]" value="3" /><label for="star3" title="3 stars"><i class="fas fa-star"></i></label>
+                <input type="radio" id="star2" name="review[rating]" value="2" /><label for="star2" title="2 stars"><i class="fas fa-star"></i></label>
+                <input type="radio" id="star1" name="review[rating]" value="1" /><label for="star1" title="1 star"><i class="fas fa-star"></i></label>
+            </fieldset>
+            <div class="form-text">Select a rating from 1 to 5 stars</div>
+        </div>
+        <div class="mb-3 mt-3">
+            <label for="comment" class="form-label">Comment</label>
+            <textarea name="review[comment]" id="comment" cols="30" rows="5" class="form-control" required></textarea>
+            <div class="invalid-feedback">Please provide a review comment.</div>
+        </div>
+        <button class="btn btn-outline-dark">Submit</button>
+    </form>
+
+    <hr />
+
+    <h4>All Reviews</h4>
+    <% if (listing.reviews && listing.reviews.length > 0) { %>
+        <div class="reviews-container">
+            <% listing.reviews.forEach(review => { %>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div class="rating">
+                                <% for (let i = 1; i <= 5; i++) { %>
+                                    <% if (i <= review.rating) { %>
+                                        <i class="fas fa-star text-warning"></i>
+                                    <% } else { %>
+                                        <i class="far fa-star text-warning"></i>
+                                    <% } %>
+                                <% } %>
+                                <span class="ms-2 fw-bold"><%= review.rating %></span>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <small class="text-muted me-3">
+                                    By <%= review.author ? review.author.username : 'Anonymous' %> on <%= review.CreatedAt.toLocaleDateString() %>
+                                </small>
+                                <!-- Delete Review Button -->
+                                <% if (user && review.author && user._id.equals(review.author._id)) { %>
+                                    <form method="POST"
+                                          action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
+                                          class="d-inline">
+                                        <button type="submit"
+                                                class="btn btn-sm btn-outline-danger"
+                                                onclick="return confirm('Are you sure you want to delete this review?')">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                <% } %>
+                            </div>
+                        </div>
+                        <div class="review-content">
+                            <h6 class="text-primary mb-2">Review:</h6>
+                            <p class="card-text fs-5"><%= review.comment %></p>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    <% } else { %>
+        <p class="text-muted">No reviews yet. Be the first to leave a review!</p>
+    <% } %>
+</div>
+</div>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RentRoot | Login & Signup</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Tahoma, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #4e73df, #1cc88a);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: #fff;
+      width: 360px;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      text-align: center;
+    }
+
+    .logo {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #4e73df;
+    }
+
+    .tabs {
+      display: flex;
+      margin-bottom: 20px;
+    }
+
+    .tab {
+      flex: 1;
+      padding: 10px;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      font-weight: 600;
+      color: #555;
+      transition: 0.3s;
+    }
+
+    .tab:hover {
+      color: #375ac7;
+      border-color: #375ac7;
+    }
+
+    .tab.active {
+      border-color: #4e73df;
+      color: #4e73df;
+    }
+
+    .form {
+      display: none;
+      text-align: left;
+    }
+
+    .form.active {
+      display: block;
+    }
+
+    .form h2 {
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .input-group {
+      margin-bottom: 15px;
+    }
+
+    .input-group label {
+      font-size: 14px;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      outline: none;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .input-group input:hover {
+      border-color: #375ac7;
+      box-shadow: 0 0 8px rgba(55, 90, 199, 0.6);
+    }
+
+    .btn {
+      width: 100%;
+      background: #4e73df;
+      color: #fff;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      margin-top: 5px;
+    }
+
+    .btn:hover {
+      background: #375ac7;
+      box-shadow: 0 0 12px rgba(55, 90, 199, 0.8);
+    }
+
+    .switch-text {
+      margin-top: 15px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .switch-text a {
+      color: #4e73df;
+      text-decoration: none;
+    }
+
+    .switch-text a:hover {
+      text-decoration: underline;
+    }
+
+    .error-message {
+      background-color: #f8d7da;
+      color: #842029;
+      border: 1px solid #f5c2c7;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="logo">RentRoot</h1>
+
+    <% if (error && error.length > 0) { %>
+      <div class="error-message"><%= error %></div>
+    <% } %>
+
+    <div class="tabs">
+      <div class="tab active" data-target="login">Login</div>
+      <div class="tab" data-target="signup">Signup</div>
+    </div>
+
+    <!-- Login Form -->
+    <form id="login" class="form active" action="/login" method="POST" novalidate>
+      <h2>Login</h2>
+      <div class="input-group">
+        <label>Email</label>
+        <input type="email" name="email" required />
+      </div>
+      <div class="input-group">
+        <label>Password</label>
+        <input type="password" name="password" required />
+      </div>
+      <button type="submit" class="btn">Login</button>
+      <p class="switch-text">Don’t have an account? <a href="#" onclick="switchTab('signup')">Sign up</a></p>
+    </form>
+
+    <!-- Signup Form -->
+    <form id="signup" class="form" action="/signup" method="POST" novalidate>
+      <h2>Create Account</h2>
+      <div class="input-group">
+        <label>Username</label>
+        <input type="text" name="username" required />
+      </div>
+      <div class="input-group">
+        <label>Email</label>
+        <input type="email" name="email" required />
+      </div>
+      <div class="input-group">
+        <label>Password</label>
+        <input type="password" name="password" required />
+      </div>
+      <button type="submit" class="btn">Sign Up</button>
+      <p class="switch-text">Already have an account? <a href="#" onclick="switchTab('login')">Login</a></p>
+    </form>
+  </div>
+
+  <script>
+    const tabs = document.querySelectorAll(".tab");
+    const forms = document.querySelectorAll(".form");
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        switchTab(tab.dataset.target);
+      });
+    });
+
+    function switchTab(targetId) {
+      forms.forEach((form) => {
+        form.classList.remove("active");
+      });
+      tabs.forEach((tab) => {
+        tab.classList.remove("active");
+      });
+      document.getElementById(targetId).classList.add("active");
+      document.querySelector(`.tab[data-target='${targetId}']`).classList.add("active");
+    }
+  </script>
+</body>
+</html>

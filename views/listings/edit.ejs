@@ -1,0 +1,179 @@
+<% layout("/layouts/boilerplate") %>
+<div class="container-fluid px-4 py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="card form-card shadow-lg border-0 rounded-4">
+                <div class="form-header text-center py-4">
+                    <h2 class="mb-0 fw-bold">
+                        <i class="fas fa-edit me-2"></i>
+                        Edit Listing
+                    </h2>
+                    <p class="mb-0 opacity-75">Update your property details</p>
+                </div>
+                
+                <div class="form-body">
+                    <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" enctype="multipart/form-data">
+                        <!-- Title -->
+                        <div class="mb-4">
+                            <label for="title" class="form-label">
+                                <i class="fas fa-home me-2"></i>Property Title
+                            </label>
+                            <input type="text" 
+                                   class="form-control" 
+                                   name="listing[title]" 
+                                   id="title" 
+                                   value="<%= listing.title %>"
+                                   placeholder="e.g., Cozy Beach House"
+                                   required>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-4">
+                            <label for="description" class="form-label">
+                                <i class="fas fa-align-left me-2"></i>Description
+                            </label>
+                            <textarea class="form-control" 
+                                      name="listing[description]" 
+                                      id="description" 
+                                      rows="4" 
+                                      placeholder="Tell us about your property..."
+                                      required><%= listing.description %></textarea>
+                        </div>
+
+                        <div class="row">
+                            <!-- Price -->
+                            <div class="col-md-6 mb-4">
+                                <label for="price" class="form-label">
+                                    <i class="fas fa-rupee-sign me-2"></i>Price per night
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text">₹</span>
+                                    <input type="number" 
+                                           class="form-control" 
+                                           name="listing[price]" 
+                                           id="price" 
+                                           value="<%= listing.price %>"
+                                           min="1"
+                                           required>
+                                </div>
+                            </div>
+
+                            <!-- Location -->
+                            <div class="col-md-6 mb-4">
+                                <label for="location" class="form-label">
+                                    <i class="fas fa-map-marker-alt me-2"></i>Location
+                                </label>
+                                <input type="text" 
+                                       class="form-control" 
+                                       name="listing[location]" 
+                                       id="location" 
+                                       value="<%= listing.location %>"
+                                       placeholder="e.g., Mumbai, Goa"
+                                       required>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <!-- Country -->
+                            <div class="col-md-6 mb-4">
+                                <label for="country" class="form-label">
+                                    <i class="fas fa-globe me-2"></i>Country
+                                </label>
+                                <input type="text"
+                                       class="form-control"
+                                       name="listing[country]"
+                                       id="country"
+                                       value="<%= listing.country %>"
+                                       placeholder="India"
+                                       required>
+                            </div>
+
+                            <!-- Image Upload -->
+                            <div class="col-md-6 mb-4">
+                                <label for="image" class="form-label">
+                                    <i class="fas fa-image me-2"></i>Upload Image
+                                </label>
+                                <input type="file"
+                                       class="form-control"
+                                       name="image"
+                                       id="image"
+                                       accept="image/*">
+                                <!-- Current Image -->
+                                <div class="mt-3">
+                                    <label class="form-label">Current Image:</label>
+                                    <img id="currentImage" src="<%= listing.image %>" alt="Current Image" class="img-fluid rounded" style="max-height: 200px;">
+                                </div>
+                                <!-- Image Preview -->
+                                <div class="mt-3" id="imagePreviewContainer" style="display: none;">
+                                    <label class="form-label">New Image Preview:</label>
+                                    <img id="imagePreview" src="" alt="Image Preview" class="img-fluid rounded" style="max-height: 200px;">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <!-- Latitude -->
+                            <div class="col-md-6 mb-4">
+                                <label for="latitude" class="form-label">
+                                    <i class="fas fa-map-marker-alt me-2"></i>Latitude
+                                </label>
+                                <input type="number"
+                                       step="any"
+                                       class="form-control"
+                                       name="listing[latitude]"
+                                       id="latitude"
+                                       value="<%= listing.latitude || '' %>"
+                                       placeholder="28.6139">
+                            </div>
+
+                            <!-- Longitude -->
+                            <div class="col-md-6 mb-4">
+                                <label for="longitude" class="form-label">
+                                    <i class="fas fa-map-marker-alt me-2"></i>Longitude
+                                </label>
+                                <input type="number"
+                                       step="any"
+                                       class="form-control"
+                                       name="listing[longitude]"
+                                       id="longitude"
+                                       value="<%= listing.longitude || '' %>"
+                                       placeholder="77.2090">
+                            </div>
+                        </div>
+
+<script>
+document.getElementById('image').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    const previewContainer = document.getElementById('imagePreviewContainer');
+    const previewImage = document.getElementById('imagePreview');
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            previewImage.src = e.target.result;
+            previewContainer.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    } else {
+        previewContainer.style.display = 'none';
+    }
+});
+</script>
+
+                        <!-- Action Buttons -->
+                        <div class="d-flex gap-3 justify-content-center mt-4">
+                            <button type="submit" class="btn btn-primary px-4 py-2">
+                                <i class="fas fa-save me-2"></i>
+                                Update Listing
+                            </button>
+                            <a href="/listings/<%= listing._id %>" class="btn btn-cancel px-4 py-2">
+                                <i class="fas fa-times me-2"></i>
+                                Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

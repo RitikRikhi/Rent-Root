@@ -1,0 +1,177 @@
+<% layout("/layouts/boilerplate") %>
+<div class="container-fluid px-4 py-3">
+    <h3 class="mb-4">All listings</h3>
+    <form method="Get" action="/listings/new" class="mb-4">
+        <button class="btn btn-primary">Create new listings</button>
+    </form>
+
+    <!-- Beautiful Visual Filter Section -->
+    <div class="mb-4">
+        <div class="filter-container">
+            <div class="d-flex flex-wrap gap-3 mb-4">
+                <!-- All Listings -->
+                <a href="/listings?filter=all" class="filter-card <%= currentFilter === 'all' ? 'active' : '' %>" title="All Listings">
+                    <div class="filter-image">
+                        <i class="fas fa-th-large"></i>
+                    </div>
+                    <span class="filter-text">All</span>
+                </a>
+
+                <!-- Trending -->
+                <a href="/listings?filter=trending" class="filter-card <%= currentFilter === 'trending' ? 'active' : '' %>" title="Trending Listings">
+                    <div class="filter-image trending">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <span class="filter-text">Trending</span>
+                </a>
+
+                <!-- Luxury -->
+                <a href="/listings?filter=luxury" class="filter-card <%= currentFilter === 'luxury' ? 'active' : '' %>" title="Luxury Properties">
+                    <div class="filter-image luxury">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <span class="filter-text">Luxury</span>
+                </a>
+
+                <!-- Budget -->
+                <a href="/listings?filter=budget" class="filter-card <%= currentFilter === 'budget' ? 'active' : '' %>" title="Budget Friendly">
+                    <div class="filter-image budget">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <span class="filter-text">Budget</span>
+                </a>
+
+                <!-- Beach -->
+                <a href="/listings?filter=beach" class="filter-card <%= currentFilter === 'beach' ? 'active' : '' %>" title="Beach Front">
+                    <div class="filter-image beach">
+                        <i class="fas fa-umbrella-beach"></i>
+                    </div>
+                    <span class="filter-text">Beach</span>
+                </a>
+
+                <!-- Mountain -->
+                <a href="/listings?filter=mountain" class="filter-card <%= currentFilter === 'mountain' ? 'active' : '' %>" title="Mountain View">
+                    <div class="filter-image mountain">
+                        <i class="fas fa-mountain"></i>
+                    </div>
+                    <span class="filter-text">Mountain</span>
+                </a>
+
+                <!-- City -->
+                <a href="/listings?filter=city" class="filter-card <%= currentFilter === 'city' ? 'active' : '' %>" title="City Center">
+                    <div class="filter-image city">
+                        <i class="fas fa-city"></i>
+                    </div>
+                    <span class="filter-text">City</span>
+                </a>
+
+                <!-- Pool -->
+                <a href="/listings?filter=pool" class="filter-card <%= currentFilter === 'pool' ? 'active' : '' %>" title="Swimming Pool">
+                    <div class="filter-image pool">
+                        <i class="fas fa-swimming-pool"></i>
+                    </div>
+                    <span class="filter-text">Pool</span>
+                </a>
+            </div>
+
+            <!-- Beautiful Quick Filters -->
+            <div class="quick-filters-section">
+                <div class="quick-filters-label">
+                    <i class="fas fa-tags me-2"></i>
+                    <span>Quick Filters</span>
+                </div>
+                <div class="d-flex flex-wrap gap-2">
+                    <span class="amenity-badge" data-filter="new" title="Newly Added">
+                        <i class="fas fa-sparkles"></i>
+                        <span>New</span>
+                    </span>
+
+                    <span class="amenity-badge" data-filter="verified" title="Verified Properties">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Verified</span>
+                    </span>
+
+                    <span class="amenity-badge" data-filter="pet-friendly" title="Pet Friendly">
+                        <i class="fas fa-paw"></i>
+                        <span>Pet Friendly</span>
+                    </span>
+
+                    <span class="amenity-badge" data-filter="wifi" title="Free WiFi">
+                        <i class="fas fa-wifi"></i>
+                        <span>WiFi</span>
+                    </span>
+
+                    <span class="amenity-badge" data-filter="parking" title="Parking Available">
+                        <i class="fas fa-car"></i>
+                        <span>Parking</span>
+                    </span>
+
+                    <span class="amenity-badge" data-filter="ac" title="Air Conditioning">
+                        <i class="fas fa-snowflake"></i>
+                        <span>A/C</span>
+                    </span>
+
+                    <span class="amenity-badge" data-filter="kitchen" title="Kitchen Available">
+                        <i class="fas fa-utensils"></i>
+                        <span>Kitchen</span>
+                    </span>
+
+                    <span class="amenity-badge" data-filter="breakfast" title="Free Breakfast">
+                        <i class="fas fa-coffee"></i>
+                        <span>Breakfast</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <% for(let listing of allListings) { %>
+            <div class="col">
+                <a href="/listings/<%= listing._id %>" class="text-decoration-none text-dark">
+                    <div class="card h-100 position-relative listing-card">
+                        <!-- Category Badge -->
+                        <div class="category-badge">
+                            <span class="category-icon">
+                                <% if(listing.category === 'trending') { %>
+                                    <i class="fas fa-fire"></i>
+                                <% } else if(listing.category === 'luxury') { %>
+                                    <i class="fas fa-crown"></i>
+                                <% } else if(listing.category === 'budget') { %>
+                                    <i class="fas fa-leaf"></i>
+                                <% } else if(listing.category === 'beach') { %>
+                                    <i class="fas fa-umbrella-beach"></i>
+                                <% } else if(listing.category === 'mountain') { %>
+                                    <i class="fas fa-mountain"></i>
+                                <% } else if(listing.category === 'city') { %>
+                                    <i class="fas fa-city"></i>
+                                <% } else if(listing.category === 'pool') { %>
+                                    <i class="fas fa-swimming-pool"></i>
+                                <% } else { %>
+                                    <i class="fas fa-home"></i>
+                                <% } %>
+                            </span>
+                        </div>
+
+                        <img src="<%= listing.image.url %>" class="card-img-top" alt="listing image" style="height: 200px; object-fit: cover;">
+                        <div class="card-img-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-0 hover-overlay" style="transition: all 0.3s ease;">
+                            <div class="text-center text-white">
+                                <h5 class="fw-bold"><%= listing.title %></h5>
+                                <p class="mb-1">&#8377; <%= listing.price.toLocaleString("en-IN") %> / night</p>
+                                <small>View Details →</small>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="card-title mb-0"><%= listing.title %></h5>
+                            </div>
+                            <p class="card-text">
+                                &#8377; <%= listing.price.toLocaleString("en-IN") %> / night
+                            </p>
+
+                            <!-- Category and Amenities Row -->
+                            <div class="listing-meta">
+                                <div class="category-label">
+                                    <small class="text-muted">
+                                        <% if(listing.category === 'trending') { %>
+                                            🔥 Trending

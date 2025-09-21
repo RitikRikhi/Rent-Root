@@ -1,0 +1,289 @@
+<% layout("/layouts/boilerplate") %>
+<div class="container-fluid px-4 py-3">
+    <!-- Hero Section -->
+    <div class="hero-section mb-5 p-5 rounded-4 text-white text-center" style="background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80'); background-size: cover; background-position: center;">
+        <h1 class="display-4 fw-bold mb-3">Find Your Perfect Stay</h1>
+        <p class="lead mb-4">Explore the best listings tailored just for you</p>
+        <a href="#listings" class="btn btn-primary btn-lg">Browse Listings</a>
+    </div>
+
+    <!-- Discounts and Advertisements Section -->
+    <div class="discounts-ads-section mb-5 p-4 bg-light rounded-4 shadow-sm">
+        <h2 class="mb-4 text-center">Special Discounts & Offers</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?auto=format&fit=crop&w=600&q=80" class="card-img-top rounded-top" alt="Discount 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Summer Sale</h5>
+                        <p class="card-text">Get up to 30% off on beach listings this summer season. Book now and save!</p>
+                        <a href="/listings?filter=beach" class="btn btn-primary">Explore Beach Listings</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=600&q=80" class="card-img-top rounded-top" alt="Discount 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Luxury Getaway</h5>
+                        <p class="card-text">Enjoy exclusive luxury properties with special discounts for early bookings.</p>
+                        <a href="/listings?filter=luxury" class="btn btn-primary">Explore Luxury Listings</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=600&q=80" class="card-img-top rounded-top" alt="Discount 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Pet Friendly Deals</h5>
+                        <p class="card-text">Find pet-friendly listings with special offers for your furry friends.</p>
+                        <a href="/listings?filter=pet-friendly" class="btn btn-primary">Explore Pet Friendly Listings</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="mb-4">All listings</h3>
+    <div class="d-flex justify-content-end align-items-center mb-3">
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="taxToggle">
+            <label class="form-check-label" for="taxToggle">Show Tax (10%)</label>
+        </div>
+    </div>
+
+    <!-- Beautiful Visual Filter Section -->
+    <div class="mb-4">
+        <div class="filter-container">
+            <div class="d-flex flex-wrap gap-3 mb-4">
+            <!-- All Listings -->
+<a href="/listings?filter=all" class="filter-card <%= currentFilter === 'all' ? 'active' : '' %>" title="All Listings" onclick="event.preventDefault(); window.location.href=this.href.split('#')[0];">
+                <div class="filter-image">
+                    <i class="fas fa-th-large"></i>
+                </div>
+                <span class="filter-text">All</span>
+            </a>
+
+            <!-- Trending -->
+<a href="/listings?filter=trending" class="filter-card <%= currentFilter === 'trending' ? 'active' : '' %>" title="Trending Listings" onclick="event.preventDefault(); window.location.href=this.href.split('#')[0];">
+                <div class="filter-image trending">
+                    <i class="fas fa-fire"></i>
+                </div>
+                <span class="filter-text">Trending</span>
+            </a>
+
+            <!-- Luxury -->
+<a href="/listings?filter=luxury" class="filter-card <%= currentFilter === 'luxury' ? 'active' : '' %>" title="Luxury Properties" onclick="event.preventDefault(); window.location.href=this.href.split('#')[0];">
+                <div class="filter-image luxury">
+                    <i class="fas fa-crown"></i>
+                </div>
+                <span class="filter-text">Luxury</span>
+            </a>
+
+            <!-- Budget -->
+<a href="/listings?filter=budget" class="filter-card <%= currentFilter === 'budget' ? 'active' : '' %>" title="Budget Friendly" onclick="event.preventDefault(); window.location.href=this.href.split('#')[0];">
+                <div class="filter-image budget">
+                    <i class="fas fa-leaf"></i>
+                </div>
+                <span class="filter-text">Budget</span>
+            </a>
+
+            <!-- Beach -->
+<a href="/listings?filter=beach" class="filter-card <%= currentFilter === 'beach' ? 'active' : '' %>" title="Beach Front" onclick="event.preventDefault(); window.location.href=this.href.split('#')[0];">
+                <div class="filter-image beach">
+                    <i class="fas fa-umbrella-beach"></i>
+                </div>
+                <span class="filter-text">Beach</span>
+            </a>
+
+            <!-- Mountain -->
+<a href="/listings?filter=mountain" class="filter-card <%= currentFilter === 'mountain' ? 'active' : '' %>" title="Mountain View" onclick="event.preventDefault(); window.location.href=this.href.split('#')[0];">
+                <div class="filter-image mountain">
+                    <i class="fas fa-mountain"></i>
+                </div>
+                <span class="filter-text">Mountain</span>
+            </a>
+
+            <!-- City -->
+<a href="/listings?filter=city" class="filter-card <%= currentFilter === 'city' ? 'active' : '' %>" title="City Center" onclick="event.preventDefault(); window.location.href=this.href.split('#')[0];">
+                <div class="filter-image city">
+                    <i class="fas fa-city"></i>
+                </div>
+                <span class="filter-text">City</span>
+            </a>
+
+            <!-- Pool -->
+<a href="/listings?filter=pool" class="filter-card <%= currentFilter === 'pool' ? 'active' : '' %>" title="Swimming Pool" onclick="event.preventDefault(); window.location.href=this.href.split('#')[0];">
+                <div class="filter-image pool">
+                    <i class="fas fa-swimming-pool"></i>
+                </div>
+                <span class="filter-text">Pool</span>
+            </a>
+            </div>
+
+            <!-- Beautiful Quick Filters -->
+                <div class="quick-filters-section">
+                    <div class="quick-filters-label">
+                        <i class="fas fa-tags me-2"></i>
+                        <span>Quick Filters</span>
+                    </div>
+                    <div class="d-flex flex-wrap gap-2">
+                        <% 
+                            const filterDisplayNames = {
+                                'new': 'New',
+                                'verified': 'Verified',
+                                'pet-friendly': 'Pet Friendly',
+                                'wifi': 'WiFi',
+                                'parking': 'Parking',
+                                'ac': 'A/C',
+                                'kitchen': 'Kitchen',
+                                'breakfast': 'Breakfast'
+                            };
+                        %>
+                        <% Object.entries(filterDisplayNames).forEach(([key, displayName]) => { %>
+                            <span class="amenity-badge" data-filter="<%= key %>" title="<%= displayName %>">
+                                <i class="fas fa-tags"></i>
+                                <span><%= displayName %></span>
+                            </span>
+                        <% }) %>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <% for(let listing of allListings) { %>
+            <div class="col">
+                <a href="/listings/<%= listing._id %>" class="text-decoration-none text-dark">
+                    <div class="card h-100 position-relative listing-card">
+                        <!-- Category Badge -->
+                        <div class="category-badge">
+                            <span class="category-icon">
+                                <% if(listing.category === 'trending') { %>
+                                    <i class="fas fa-fire"></i>
+                                <% } else if(listing.category === 'luxury') { %>
+                                    <i class="fas fa-crown"></i>
+                                <% } else if(listing.category === 'budget') { %>
+                                    <i class="fas fa-leaf"></i>
+                                <% } else if(listing.category === 'beach') { %>
+                                    <i class="fas fa-umbrella-beach"></i>
+                                <% } else if(listing.category === 'mountain') { %>
+                                    <i class="fas fa-mountain"></i>
+                                <% } else if(listing.category === 'city') { %>
+                                    <i class="fas fa-city"></i>
+                                <% } else if(listing.category === 'pool') { %>
+                                    <i class="fas fa-swimming-pool"></i>
+                                <% } else { %>
+                                    <i class="fas fa-home"></i>
+                                <% } %>
+                            </span>
+                        </div>
+
+                        <img src="<%= listing.image.url %>" class="card-img-top" alt="listing image" style="height: 200px; object-fit: cover;">
+                        <div class="card-img-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-0 hover-overlay" style="transition: all 0.3s ease;">
+                            <div class="text-center text-white">
+                                <h5 class="fw-bold"><%= listing.title %></h5>
+                                <p class="mb-1">&#8377; <%= listing.price.toLocaleString("en-IN") %> / night</p>
+                                <small>View Details →</small>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="card-title mb-0"><%= listing.title %></h5>
+                            </div>
+                            <p class="card-text">
+                                &#8377; <%= listing.price.toLocaleString("en-IN") %> / night
+                                <span class="tax-amount text-muted" style="display:none;">
+                                    + &#8377; <%= (listing.price * 0.10).toLocaleString("en-IN") %> tax
+                                </span>
+                            </p>
+
+                            <!-- Category and Amenities Row -->
+                            <div class="listing-meta">
+                                <div class="category-label">
+                                    <small class="text-muted">
+                                        <% if(listing.category === 'trending') { %>
+                                            🔥 Trending
+                                        <% } else if(listing.category === 'luxury') { %>
+                                            👑 Luxury
+                                        <% } else if(listing.category === 'budget') { %>
+                                            🌿 Budget
+                                        <% } else if(listing.category === 'beach') { %>
+                                            🏖️ Beach
+                                        <% } else if(listing.category === 'mountain') { %>
+                                            🏔️ Mountain
+                                        <% } else if(listing.category === 'city') { %>
+                                            🏙️ City
+                                        <% } else if(listing.category === 'pool') { %>
+                                            🏊 Pool
+                                        <% } else { %>
+                                            🏠 Standard
+                                        <% } %>
+                                    </small>
+                                </div>
+
+                                <!-- Amenities indicators -->
+                                <div class="amenities-indicators">
+                                    <% if(listing.amenities && listing.amenities.wifi) { %>
+                                        <small class="amenity-dot" title="Free WiFi">📶</small>
+                                    <% } %>
+                                    <% if(listing.amenities && listing.amenities.parking) { %>
+                                        <small class="amenity-dot" title="Parking">🚗</small>
+                                    <% } %>
+                                    <% if(listing.amenities && listing.amenities.ac) { %>
+                                        <small class="amenity-dot" title="Air Conditioning">❄️</small>
+                                    <% } %>
+                                    <% if(listing.amenities && listing.amenities.kitchen) { %>
+                                        <small class="amenity-dot" title="Kitchen">🍽️</small>
+                                    <% } %>
+                                    <% if(listing.amenities && listing.amenities.petFriendly) { %>
+                                        <small class="amenity-dot" title="Pet Friendly">🐾</small>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        <% } %>
+    </div>
+</div>
+
+<style>
+.hover-overlay {
+    opacity: 0;
+    background: rgba(0, 0, 0, 0.7) !important;
+}
+
+.hover-overlay:hover {
+    opacity: 1 !important;
+}
+
+.card:hover .hover-overlay {
+    opacity: 1;
+}
+
+/* Filter Container */
+.filter-container {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    border: 1px solid rgba(0,0,0,0.06);
+}
+
+/* Beautiful Filter Card Styles */
+.filter-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 90px;
+    height: 90px;
+    border-radius: 20px;
+    text-decoration: none !important;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+    background: white;

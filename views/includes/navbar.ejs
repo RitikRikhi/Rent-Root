@@ -1,0 +1,47 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom sticky-top">
+  <div class="container-fluid">
+<a class="navbar-brand" href="/listings/ads" aria-label="Home" id="home-logo">
+  <i class="fa-solid fa-hotel"></i>
+</a>
+<span id="welcome-text" class="welcome-text d-none">Welcome!</span>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+        <li class="nav-item">
+          <a class="nav-link" href="/listings">All Listings</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/listings/new">Add New Listing</a>
+        </li>
+      </ul>
+      <form class="d-flex ms-auto" method="GET" action="/listings/search" role="search" aria-label="Search listings">
+        <input class="form-control me-2" type="search" name="q" placeholder="Search listings" aria-label="Search listings">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+      <ul class="navbar-nav ms-3">
+        <li class="nav-item dropdown profile-dropdown">
+          <a class="nav-link dropdown-toggle profile-icon" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+            <i class="fa-solid fa-user"></i>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            <% if (!user) { %>
+              <li><a class="dropdown-item" href="/signup">Sign Up</a></li>
+              <li><a class="dropdown-item" href="/login">Login</a></li>
+            <% } else { %>
+<li class="dropdown-item disabled d-flex align-items-center" tabindex="-1" aria-disabled="true">
+  <img src="/images/default-avatar.png" alt="Avatar" class="avatar-img me-2" />
+  <span><%= user.username %></span>
+</li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="/logout">Logout</a></li>
+            <% } %>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

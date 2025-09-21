@@ -1,0 +1,190 @@
+<% layout("/layouts/boilerplate") %>
+<div class="container-fluid px-4 py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header bg-gradient-primary text-white text-center py-4 rounded-top-4">
+                    <h2 class="mb-0 fw-bold">
+                        <i class="fas fa-plus-circle me-2"></i>
+                        Create New Listing
+                    </h2>
+                    <p class="mb-0 opacity-75">Add your property details to get started</p>
+                </div>
+                
+                <div class="card-body p-4">
+                    <form method="POST" action="/listings" enctype="multipart/form-data">
+                        <!-- Title -->
+                        <div class="mb-4">
+                            <label for="title" class="form-label fw-semibold text-primary">
+                                <i class="fas fa-home me-2"></i>Property Title
+                            </label>
+                            <input type="text" 
+                                   class="form-control form-control-lg border-2" 
+                                   name="listing[title]" 
+                                   id="title" 
+                                   placeholder="e.g., Cozy Beach House"
+                                   required>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-4">
+                            <label for="description" class="form-label fw-semibold text-primary">
+                                <i class="fas fa-align-left me-2"></i>Description
+                            </label>
+                            <textarea class="form-control border-2" 
+                                      name="listing[description]" 
+                                      id="description" 
+                                      rows="4" 
+                                      placeholder="Tell us about your property..."
+                                      required></textarea>
+                        </div>
+
+                        <div class="row">
+                            <!-- Price -->
+                            <div class="col-md-6 mb-4">
+                                <label for="price" class="form-label fw-semibold text-primary">
+                                    <i class="fas fa-rupee-sign me-2"></i>Price per night
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light">₹</span>
+                                    <input type="number" 
+                                           class="form-control border-2" 
+                                           name="listing[price]" 
+                                           id="price" 
+                                           placeholder="1000"
+                                           min="1"
+                                           required>
+                                </div>
+                            </div>
+
+                            <!-- Location -->
+                            <div class="col-md-6 mb-4">
+                                <label for="location" class="form-label fw-semibold text-primary">
+                                    <i class="fas fa-map-marker-alt me-2"></i>Location
+                                </label>
+                                <input type="text" 
+                                       class="form-control border-2" 
+                                       name="listing[location]" 
+                                       id="location" 
+                                       placeholder="e.g., Mumbai, Goa"
+                                       required>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <!-- Country -->
+                            <div class="col-md-6 mb-4">
+                                <label for="country" class="form-label fw-semibold text-primary">
+                                    <i class="fas fa-globe me-2"></i>Country
+                                </label>
+                                <input type="text"
+                                       class="form-control border-2"
+                                       name="listing[country]"
+                                       id="country"
+                                       placeholder="India"
+                                       required>
+                            </div>
+
+                            <!-- Image Upload -->
+                            <div class="col-md-6 mb-4">
+                                <label for="image" class="form-label fw-semibold text-primary">
+                                    <i class="fas fa-image me-2"></i>Upload Image
+                                </label>
+                                <input type="file"
+                                       class="form-control border-2"
+                                       name="image"
+                                       id="image"
+                                       accept="image/*">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <!-- Latitude -->
+                            <div class="col-md-6 mb-4">
+                                <label for="latitude" class="form-label fw-semibold text-primary">
+                                    <i class="fas fa-map-marker-alt me-2"></i>Latitude
+                                </label>
+                                <input type="number"
+                                       step="any"
+                                       class="form-control border-2"
+                                       name="listing[latitude]"
+                                       id="latitude"
+                                       placeholder="28.6139">
+                            </div>
+
+                            <!-- Longitude -->
+                            <div class="col-md-6 mb-4">
+                                <label for="longitude" class="form-label fw-semibold text-primary">
+                                    <i class="fas fa-map-marker-alt me-2"></i>Longitude
+                                </label>
+                                <input type="number"
+                                       step="any"
+                                       class="form-control border-2"
+                                       name="listing[longitude]"
+                                       id="longitude"
+                                       placeholder="77.2090">
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg px-5 py-3 rounded-pill shadow-sm">
+                                <i class="fas fa-plus me-2"></i>
+                                Create Listing
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.bg-gradient-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.form-control:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+.card {
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    transform: translateY(-2px);
+}
+
+.form-label {
+    color: #495057;
+    font-weight: 600;
+}
+
+.form-control {
+    border-radius: 0.5rem;
+    border: 2px solid #e9ecef;
+}
+
+.form-control:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+.input-group-text {
+    background-color: #f8f9fa;
+    border: 2px solid #e9ecef;
+}
+</style>
