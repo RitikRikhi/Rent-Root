@@ -1,0 +1,54 @@
+/* Profile dropdown fixes */
+.profile-dropdown .dropdown-toggle::after {
+    display: none; /* Remove default arrow */
+}
+
+.profile-dropdown .dropdown-menu {
+    min-width: 200px;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.profile-dropdown .dropdown-item {
+    padding: 0.75rem 1rem;
+    font-weight: 500;
+}
+
+.profile-dropdown .dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #667eea;
+}
+
+/* Footer fixes */
+footer {
+    margin-top: auto;
+    background-color: #2c3e50;
+    color: white;
+    padding: 2rem 0;
+    width: 100%;
+    position: relative;
+    z-index: 10;
+}
+
+.f-info {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Ensure footer is always visible */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container-fluid {
+    flex: 1;
+}
+
+/* Fix for listing pages */
+.show-listing-container,
+.index-container {
+    margin-bottom: 2rem;
+}
