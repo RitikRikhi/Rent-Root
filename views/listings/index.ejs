@@ -52,6 +52,15 @@
         </div>
     </div>
 
+    <script>
+    document.getElementById('taxToggle').addEventListener('change', function() {
+        const taxAmounts = document.querySelectorAll('.tax-amount');
+        taxAmounts.forEach(amount => {
+            amount.style.display = this.checked ? 'inline' : 'none';
+        });
+    });
+    </script>
+
     <!-- Beautiful Visual Filter Section -->
     <div class="mb-4">
         <div class="filter-container">
