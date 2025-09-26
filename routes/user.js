@@ -56,7 +56,7 @@ router.get("/login", (req, res) => {
     res.render("users/login", { showNavbar: false, showFooter: false, showCenteredContent: true, error: req.flash("error") });
 });
 
-router.post("/login", validateLogin, passport.authenticate("local", {
+router.post("/login", passport.authenticate("local", {
     failureRedirect: "/login",
     failureFlash: true,
     failureMessage: "Invalid username or password."
