@@ -27,7 +27,7 @@ const validateLogin = (req, res, next) => {
 };
 
 router.get("/signup", (req, res) => {
-    res.render("users/login", { showNavbar: false, showFooter: false, showCenteredContent: true, error: req.flash("error") });
+    res.render("users/signup", { showNavbar: false, showFooter: false, showCenteredContent: true, error: req.flash("error") });
 })
 
 router.post("/signup", validateUser, wrapAsync(async (req, res, next) => {
