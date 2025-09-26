@@ -28,7 +28,7 @@
             <i class="fa-solid fa-user"></i>
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-            <% if (!user) { %>
+            <% if (typeof user === 'undefined' || !user) { %>
               <li><a class="dropdown-item" href="/signup">Sign Up</a></li>
               <li><a class="dropdown-item" href="/login">Login</a></li>
             <% } else { %>

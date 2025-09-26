@@ -40,7 +40,10 @@ app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
-const dbUrl = process.env.DB_URL || "mongodb://127.0.0.1:27017/mydatabase";
+if (!process.env.DB_URL) {
+    throw new Error('DB_URL environment variable is required for MongoDB connection. Set it in Render dashboard.');
+}
+const dbUrl = process.env.DB_URL;
 
 const secret = process.env.SECRET || "mysupersecret";
 
