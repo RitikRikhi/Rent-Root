@@ -77,7 +77,7 @@ app.use(flash());
 
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStrategy({ usernameField: "email" }, User.authenticate()));
+passport.use(new LocalStrategy({ usernameField: "username" }, User.authenticate()));
 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
