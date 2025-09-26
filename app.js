@@ -86,8 +86,6 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use("/", userRouter);
-
 app.get("/demouser", async (req, res) => {
     let fakeUser = new User({
         email: "student@gmail.com",
@@ -103,10 +101,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 // Connect to MongoDB
-mongoose.connect(dbUrl, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
+mongoose.connect(dbUrl)
     .then(() => console.log("Connected to MongoDB"))
     .catch(err => {
         console.error("MongoDB connection error:", err);
@@ -117,6 +112,8 @@ app.use("/listings", listingRoutes);
 
 // Use review routes
 app.use("/listings", reviewRoutes);
+
+app.use("/", userRouter);
 
 app.all("*", ( req, res, next) => {
     next(new ExpressError(404, "Page Not Found"));
